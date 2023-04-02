@@ -31,6 +31,11 @@ public class SessaoRepositoryImpl implements SessaoRepositoryPort {
 
     @Override
     public Optional<Sessao> findByPautaId(Pauta pauta) {
-        return sessaoRepository.findSessaoByPauta(pauta.getId());
+
+        Optional<SessaoEntity> sessaoEntity = sessaoRepository.findSessaoByPauta(pauta.getId());
+        if (sessaoEntity.isPresent()) {
+            return Optional.of(modelMapper.map(sessaoEntity.get(), Sessao.class));
+        }
+        return Optional.empty();
     }
 }

@@ -1,5 +1,6 @@
 package com.sistema.votacao.infrastructure.adapters.repository;
 
+import com.sistema.votacao.domain.entities.Sessao;
 import com.sistema.votacao.domain.entities.Voto;
 import com.sistema.votacao.domain.port.voto.VotoRepositoryPort;
 import com.sistema.votacao.infrastructure.adapters.entity.VotoEntity;
@@ -26,5 +27,10 @@ public class VotoRepositoryImpl implements VotoRepositoryPort {
         VotoEntity votoEntity = modelMapper.map(voto, VotoEntity.class);
         votoRepository.save(votoEntity);
 
+    }
+
+    @Override
+    public Boolean verificarVotoExistente(Voto voto, Sessao sessao) {
+        return votoRepository.verifyVotoBySessao(voto.getCpf(), sessao.getId()).isPresent() ? Boolean.TRUE : Boolean.FALSE;
     }
 }

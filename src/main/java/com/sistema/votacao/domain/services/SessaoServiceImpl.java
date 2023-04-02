@@ -30,6 +30,7 @@ public class SessaoServiceImpl implements SessaoServicePort {
         if (findByPautaId(pauta).isPresent()) {
 
         }
+
         LocalDateTime dataAbertura = LocalDateTime.now();
 
         Sessao sessao = new Sessao();
@@ -38,6 +39,7 @@ public class SessaoServiceImpl implements SessaoServicePort {
         sessao.setDataFechamento(getDataFechamento(dataAbertura, tempoFuncionamento));
 
         sessaoRepositoryPort.iniciarSessao(sessao);
+
     }
 
     private LocalDateTime getDataFechamento(LocalDateTime dataAbertura, Long tempoFuncionamento) {

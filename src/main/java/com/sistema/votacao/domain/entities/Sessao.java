@@ -1,7 +1,6 @@
 package com.sistema.votacao.domain.entities;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 public class Sessao {
@@ -61,6 +60,6 @@ public class Sessao {
     private LocalDateTime dataAbertura;
     private LocalDateTime dataFechamento;
     private Pauta pauta;
-    private Set<Voto> votos = new HashSet<>();
+    private Set<Voto> votos;
 
 }

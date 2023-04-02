@@ -28,8 +28,8 @@ public class SessionController {
     private Integer tempoPadraoSegundos;
 
     @PostMapping(path = "/sessao/{pautaId}/iniciar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Criação de Pauta", notes = "Criação de Pauta")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "sucess", response = PautaResponseDTO.class)})
+    @ApiOperation(value = "Abertura da Sessão de Votação", notes = "Abertura da Sessão de Votação")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Sessão de votação aberta", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> iniciarSessao(@PathVariable(value = "pautaId") Long pautaId,
                                                 @RequestBody SessaoRequestDTO sessaoRequestDTO) {

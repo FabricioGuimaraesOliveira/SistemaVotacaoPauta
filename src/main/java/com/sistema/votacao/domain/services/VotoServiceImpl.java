@@ -1,5 +1,6 @@
 package com.sistema.votacao.domain.services;
 
+import com.sistema.votacao.domain.entities.Sessao;
 import com.sistema.votacao.domain.entities.Voto;
 import com.sistema.votacao.domain.port.pauta.PautaRepositoryPort;
 import com.sistema.votacao.domain.port.sessao.SessaoRepositoryPort;
@@ -21,10 +22,29 @@ public class VotoServiceImpl implements VotoServicePort {
 
     @Override
     public void registrarVoto(Long idPauta, Voto voto) {
+
         var pauta = pautaRepositoryPort.findById(idPauta).orElseThrow();
         var sessao = sessaoRepositoryPort.findByPautaId(pauta).orElseThrow();
+
+        validarHorarioVotacao(sessao);
+        validarVotoExistente(voto, sessao);
+
         voto.setDataHora(LocalDateTime.now());
         voto.setSessao(sessao);
         votoRepositoryPort.registrarVoto(voto);
     }
+
+    private void validarHorarioVotacao(Sessao sessao) {
+        if (LocalDateTime.now().isAfter(sessao.getDataFechamento())) {
+
+        }
+    }
+
+    private void validarVotoExistente(Voto voto, Sessao sessao) {
+        if (votoRepositoryPort.verificarVotoExistente(voto, sessao)) {
+
+        }
+
+    }
+
 }

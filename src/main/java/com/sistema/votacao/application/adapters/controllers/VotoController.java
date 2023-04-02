@@ -30,8 +30,8 @@ public class VotoController {
     private Integer tempoPadraoSegundos;
 
     @PostMapping(path = "/{pautaId}/votar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Criação de Pauta", notes = "Criação de Pauta")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "sucess", response = PautaResponseDTO.class)})
+    @ApiOperation(value = "Registrando Voto", notes = "Registrando Voto")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Voto registrado", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> votar(@PathVariable(value = "pautaId") Long pautaId,
                                         @RequestBody @Valid VotoRequestDTO votoRequestDTO) {

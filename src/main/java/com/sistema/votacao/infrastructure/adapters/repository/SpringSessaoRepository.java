@@ -1,7 +1,5 @@
 package com.sistema.votacao.infrastructure.adapters.repository;
 
-import com.sistema.votacao.domain.entities.Pauta;
-import com.sistema.votacao.domain.entities.Sessao;
 import com.sistema.votacao.infrastructure.adapters.entity.SessaoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -14,5 +12,5 @@ import java.util.Optional;
 @Repository
 public interface SpringSessaoRepository extends JpaRepository<SessaoEntity, Long>, JpaSpecificationExecutor<SessaoEntity> {
     @Query(value = "select * from tb_sessao where id_pauta = :pautaId", nativeQuery = true)
-    Optional<Sessao> findSessaoByPauta(@Param("pautaId") Long pautaId);
+    Optional<SessaoEntity> findSessaoByPauta(@Param("pautaId") Long pautaId);
 }

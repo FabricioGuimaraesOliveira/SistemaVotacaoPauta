@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Api(tags = {"VOTACAO"})
+@Api(tags = {"PAUTA"})
 @RequestMapping("/v1/pauta")
 @RequiredArgsConstructor
 public class PautaController {

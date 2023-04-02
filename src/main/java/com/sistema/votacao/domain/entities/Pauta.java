@@ -26,6 +26,11 @@ public class Pauta {
         this.id = id;
     }
 
+    public Pauta(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     private Long id;
     private String nome;
 }
