@@ -10,13 +10,14 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @Api(tags = {"VOTACAO"})
 @RequestMapping("/v1/voto")
@@ -26,8 +27,6 @@ public class VotoController {
     private final ModelMapper modelMapper;
     private final VotoServicePort votoServicePort;
 
-    @Value("${tempo.sessao.default}")
-    private Integer tempoPadraoSegundos;
 
     @PostMapping(path = "/{pautaId}/votar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Registrando Voto", notes = "Registrando Voto")
@@ -35,8 +34,10 @@ public class VotoController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> votar(@PathVariable(value = "pautaId") Long pautaId,
                                         @RequestBody @Valid VotoRequestDTO votoRequestDTO) {
+        log.info("Registrando Voto : {} ", votoRequestDTO.toString());
         Voto voto = modelMapper.map(votoRequestDTO, Voto.class);
         votoServicePort.registrarVoto(pautaId, voto);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        log.info("Voto Registrado com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
