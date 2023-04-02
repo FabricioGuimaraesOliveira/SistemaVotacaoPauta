@@ -1,5 +1,7 @@
 package com.sistema.votacao.domain.services;
 
+import com.sistema.votacao.application.adapters.exception.ResourceNotFoundException;
+import com.sistema.votacao.application.adapters.exception.SessaoConflictResourceException;
 import com.sistema.votacao.domain.entities.Pauta;
 import com.sistema.votacao.domain.entities.Sessao;
 import com.sistema.votacao.domain.port.pauta.PautaRepositoryPort;
@@ -26,9 +28,9 @@ public class SessaoServiceImpl implements SessaoServicePort {
 
     @Override
     public void iniciarSessao(Long idPauta, Long tempoFuncionamento) {
-        var pauta = pautaRepositoryPort.findById(idPauta).orElseThrow();
+        var pauta = pautaRepositoryPort.findById(idPauta).orElseThrow(() -> new ResourceNotFoundException("Nao foi possivel encontrar a pauta "));
         if (findByPautaId(pauta).isPresent()) {
-
+            throw new SessaoConflictResourceException("Esta sessao já existe : " + idPauta);
         }
 
         LocalDateTime dataAbertura = LocalDateTime.now();

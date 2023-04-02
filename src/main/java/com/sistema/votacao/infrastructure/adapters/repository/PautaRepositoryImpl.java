@@ -44,7 +44,13 @@ public class PautaRepositoryImpl implements PautaRepositoryPort {
 
     @Override
     public Optional<Pauta> findById(Long id) {
-        PautaEntity pautaEntity = pautaRepository.findById(id).get();
-        return Optional.of(modelMapper.map(pautaEntity, Pauta.class));
+//        PautaEntity pautaEntity = pautaRepository.findById(id).get();
+//        return Optional.of(modelMapper.map(pautaEntity, Pauta.class));
+
+        Optional<PautaEntity> pautaEntity = pautaRepository.findById(id);
+        if (pautaEntity.isPresent()) {
+            return Optional.of(modelMapper.map(pautaEntity.get(), Pauta.class));
+        }
+        return Optional.empty();
     }
 }
