@@ -1,0 +1,50 @@
+package com.sistema.votacao.infrastructure.adapters.repository;
+
+import com.sistema.votacao.domain.entities.Pauta;
+import com.sistema.votacao.domain.port.PautaRepositoryPort;
+import com.sistema.votacao.infrastructure.adapters.entity.PautaEntity;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Component
+@Primary
+public class PautaRepositoryImpl implements PautaRepositoryPort {
+
+    private final SpringPautaRepository pautaRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+
+    public PautaRepositoryImpl(SpringPautaRepository pautaRepository) {
+        this.pautaRepository = pautaRepository;
+    }
+
+    @Transactional()
+    @Override
+    public Pauta save(Pauta pauta) {
+        PautaEntity bookEntity = modelMapper.map(pauta, PautaEntity.class);
+        return modelMapper.map(pautaRepository.save(bookEntity), Pauta.class);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Pauta> findAll() {
+        return pautaRepository.findAll().stream().map(pautaEntity -> {
+            return modelMapper.map(pautaEntity, Pauta.class);
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Pauta> findById(Long id) {
+        PautaEntity pautaEntity = pautaRepository.findById(id).get();
+        return Optional.of(modelMapper.map(pautaEntity, Pauta.class));
+    }
+}
