@@ -12,7 +12,6 @@ import java.util.Optional;
 public class SessaoServiceImpl implements SessaoServicePort {
     private final SessaoRepositoryPort sessaoRepositoryPort;
     private final PautaRepositoryPort pautaRepositoryPort;
-    private int tempoFechamentoDefault = 60;
 
 
     public SessaoServiceImpl(SessaoRepositoryPort sessaoRepositoryPort, PautaRepositoryPort pautaRepositoryPort) {

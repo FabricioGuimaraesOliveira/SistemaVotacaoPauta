@@ -3,7 +3,7 @@ package com.sistema.votacao.infrastructure.adapters.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,7 +11,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Builder
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "TB_SESSAO")
 public class SessaoEntity implements Serializable {
@@ -32,7 +35,6 @@ public class SessaoEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_pauta")
     private PautaEntity pauta;
-
 
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "sessao", cascade = CascadeType.ALL)

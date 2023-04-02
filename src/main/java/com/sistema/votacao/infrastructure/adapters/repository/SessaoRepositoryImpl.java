@@ -31,6 +31,6 @@ public class SessaoRepositoryImpl implements SessaoRepositoryPort {
 
     @Override
     public Optional<Sessao> findByPautaId(Pauta pauta) {
-        return Optional.empty();
+        return sessaoRepository.findSessaoByPauta(pauta.getId());
     }
 }
