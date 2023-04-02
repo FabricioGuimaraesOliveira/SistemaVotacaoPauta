@@ -41,10 +41,11 @@ public class SessaoEntity implements Serializable {
     private PautaEntity pauta;
 
 
-    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "sessao", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "sessao", fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
-    private Set<VotoEntity> votos;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sessao_id")
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @OneToMany(mappedBy = "sessao", fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SUBSELECT)
+    private Set<VotoEntity> votos =  new HashSet<>();
 
 }

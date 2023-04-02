@@ -4,4 +4,5 @@ import com.sistema.votacao.domain.entities.Voto;
 
 public interface VotoServicePort {
     void registrarVoto(Long idPauta, Voto voto);
+
 }

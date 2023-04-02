@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.HashSet;
+import java.util.Map;
 
 @Data
 @EqualsAndHashCode
@@ -15,5 +15,5 @@ public class PautaResponseDTO {
 
     private String nome;
 
-    private HashSet resultado;
+    private Map<String, Long> resultado;
 }

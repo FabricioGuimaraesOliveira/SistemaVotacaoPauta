@@ -15,8 +15,8 @@ public class BeanConfiguracao {
 
 
     @Bean
-    PautaServiceImpl instance(PautaRepositoryPort pautaRepositoryPort) {
-        return new PautaServiceImpl(pautaRepositoryPort);
+    PautaServiceImpl instance(PautaRepositoryPort pautaRepositoryPort, SessaoRepositoryPort sessaoRepositoryPort) {
+        return new PautaServiceImpl(pautaRepositoryPort, sessaoRepositoryPort);
     }
 
     @Bean

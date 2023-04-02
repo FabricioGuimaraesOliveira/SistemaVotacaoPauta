@@ -6,13 +6,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDateTime;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude = "sessao")
 @Entity
 @Table(name = "TB_VOTO")
 public class VotoEntity {
@@ -30,8 +33,7 @@ public class VotoEntity {
     @Column(nullable = false)
     private LocalDateTime data;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne
-    @JoinColumn(name = "id_sessao")
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SessaoEntity sessao;
 }

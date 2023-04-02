@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 interface SpringVotoRepository extends JpaRepository<VotoEntity, Long>, JpaSpecificationExecutor<VotoEntity> {
-    @Query(value = "select * from tb_voto where cpf=:votoCpf and id_sessao=:sessaoId", nativeQuery = true)
+    @Query(value = "select * from tb_voto where cpf=:votoCpf and sessao_id=:sessaoId", nativeQuery = true)
     Optional<VotoEntity> verifyVotoBySessao(@Param("votoCpf") String cpf, @Param("sessaoId") Long sessaoId);
 }

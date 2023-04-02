@@ -17,6 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RestController
 @Api(tags = {"PAUTA"})
@@ -28,7 +31,7 @@ public class PautaController {
     private final PautaServicePort pautaServicePort;
 
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/criar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Criação de Pauta", notes = "Criação de Pauta")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "created", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,5 +43,19 @@ public class PautaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(response, PautaResponseDTO.class));
     }
 
+    @GetMapping(path = "/resultado", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Obtendo o resultado da votação", notes = "Obtendo o resultado da votação")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Obtendo o resultado da votação", response = PautaResponseDTO.class)})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<PautaResponseDTO>> getResultado() {
+        var result = pautaServicePort.findAll().stream().map(this::responseDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 
+    private PautaResponseDTO responseDTO(Pauta pauta) {
+        PautaResponseDTO pautaResponseDTO = modelMapper.map(pauta, PautaResponseDTO.class);
+        pautaResponseDTO.setResultado(pautaServicePort.resultado(pauta));
+        return pautaResponseDTO;
+    }
 }
