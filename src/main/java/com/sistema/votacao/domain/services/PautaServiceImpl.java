@@ -1,8 +1,8 @@
 package com.sistema.votacao.domain.services;
 
 import com.sistema.votacao.domain.entities.Pauta;
-import com.sistema.votacao.domain.port.PautaRepositoryPort;
-import com.sistema.votacao.domain.port.PautaServicePort;
+import com.sistema.votacao.domain.port.pauta.PautaRepositoryPort;
+import com.sistema.votacao.domain.port.pauta.PautaServicePort;
 
 import java.util.List;
 import java.util.Optional;

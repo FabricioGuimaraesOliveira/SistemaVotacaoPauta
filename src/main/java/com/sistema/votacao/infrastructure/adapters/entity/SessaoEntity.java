@@ -2,11 +2,8 @@ package com.sistema.votacao.infrastructure.adapters.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -37,9 +34,9 @@ public class SessaoEntity implements Serializable {
     private PautaEntity pauta;
 
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "sessao", fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
-    private Set<VotoEntity> votos= new HashSet<>();;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sessao", cascade = CascadeType.ALL)
+    private Set<VotoEntity> votos = new HashSet<>();
+
 
 }

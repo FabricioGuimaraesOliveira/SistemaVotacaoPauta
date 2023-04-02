@@ -1,7 +1,7 @@
 package com.sistema.votacao.infrastructure.adapters.repository;
 
 import com.sistema.votacao.domain.entities.Pauta;
-import com.sistema.votacao.domain.port.PautaRepositoryPort;
+import com.sistema.votacao.domain.port.pauta.PautaRepositoryPort;
 import com.sistema.votacao.infrastructure.adapters.entity.PautaEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,8 @@ public class PautaRepositoryImpl implements PautaRepositoryPort {
     @Transactional()
     @Override
     public Pauta save(Pauta pauta) {
-        PautaEntity bookEntity = modelMapper.map(pauta, PautaEntity.class);
-        return modelMapper.map(pautaRepository.save(bookEntity), Pauta.class);
+        PautaEntity pautaEntity = modelMapper.map(pauta, PautaEntity.class);
+        return modelMapper.map(pautaRepository.saveAndFlush(pautaEntity), Pauta.class);
     }
 
     @Transactional(readOnly = true)

@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Sessao {
+
+    public Sessao() {
+    }
+
     public Sessao(Long id, LocalDateTime dataAbertura, LocalDateTime dataFechamento, Pauta pauta, Set<Voto> votos) {
         this.id = id;
         this.dataAbertura = dataAbertura;

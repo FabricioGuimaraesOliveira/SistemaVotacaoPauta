@@ -3,7 +3,7 @@ package com.sistema.votacao.application.adapters.controllers;
 import com.sistema.votacao.application.adapters.dto.request.PautaRequestDTO;
 import com.sistema.votacao.application.adapters.dto.response.PautaResponseDTO;
 import com.sistema.votacao.domain.entities.Pauta;
-import com.sistema.votacao.domain.port.PautaServicePort;
+import com.sistema.votacao.domain.port.pauta.PautaServicePort;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -31,8 +31,8 @@ public class PautaController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<PautaResponseDTO> criarPauta(@RequestBody @Valid PautaRequestDTO pautaDto) {
         Pauta pauta = modelMapper.map(pautaDto, Pauta.class);
-        pautaServicePort.save(pauta);
-        return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(pauta, PautaResponseDTO.class));
+        var response = pautaServicePort.save(pauta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(response, PautaResponseDTO.class));
     }
 
 

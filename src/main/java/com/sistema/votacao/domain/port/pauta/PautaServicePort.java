@@ -1,4 +1,4 @@
-package com.sistema.votacao.domain.port;
+package com.sistema.votacao.domain.port.pauta;
 
 import com.sistema.votacao.domain.entities.Pauta;
 
