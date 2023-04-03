@@ -7,6 +7,12 @@
 - Receber votos de associados em pauta com votos SIM/NÃO. Cada Associado é identificado por um id único e pode votar apenas uma vez por pauta
 - Disponibilizar os votos e dar o resultado da votação na pauta
 
+## Documentação de API AWS
+
+A documentação do swagger com os padrões de comunicação está disponível em:
+
+http://ec2-3-144-104-121.us-east-2.compute.amazonaws.com/swagger-ui/index.html
+
 ## Tecnologias Utilizadas no Projeto
 Para construção do sistema foram utilizadas as tecnologias:
 - Java 17;
