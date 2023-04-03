@@ -32,7 +32,7 @@ public class VotoController {
     @ApiOperation(value = "Registrando Voto", notes = "Registrando Voto")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Voto registrado", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> votar(@PathVariable(value = "pautaId") Long pautaId,
+    public ResponseEntity<Object> votar(@PathVariable(value = "pautaId") Long pautaId,
                                         @RequestBody @Valid VotoRequestDTO votoRequestDTO) {
         log.info("Registrando Voto : {} ", votoRequestDTO.toString());
         Voto voto = modelMapper.map(votoRequestDTO, Voto.class);

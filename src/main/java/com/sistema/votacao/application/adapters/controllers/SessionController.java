@@ -24,7 +24,7 @@ public class SessionController {
     @ApiOperation(value = "Abertura da Sessão de Votação", notes = "Abertura da Sessão de Votação")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Sessão de votação aberta", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> iniciarSessao(@PathVariable(value = "pautaId") Long pautaId,
+    public ResponseEntity<Object> iniciarSessao(@PathVariable(value = "pautaId") Long pautaId,
                                                 @ApiParam(required = false) @RequestParam(defaultValue = "60", name = "tempoDuracaoSegundos") Long duracaoSessao) {
         log.info("Iniciando abertura da sessao com o tempo(S) : {} ", duracaoSessao.toString());
         sessaoServicePort.iniciarSessao(pautaId, duracaoSessao);

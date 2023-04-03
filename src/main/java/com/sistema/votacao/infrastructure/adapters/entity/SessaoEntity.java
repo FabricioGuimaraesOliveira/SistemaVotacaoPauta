@@ -1,17 +1,13 @@
 package com.sistema.votacao.infrastructure.adapters.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 @Data
 @Builder
@@ -19,7 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString(exclude = {"pauta"})
 @Table(name = "TB_SESSAO")
 public class SessaoEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -40,12 +35,7 @@ public class SessaoEntity implements Serializable {
     @JoinColumn(name = "id_pauta")
     private PautaEntity pauta;
 
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sessao_id")
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    @OneToMany(mappedBy = "sessao", fetch = FetchType.LAZY)
-//    @Fetch(FetchMode.SUBSELECT)
-    private Set<VotoEntity> votos =  new HashSet<>();
+    @OneToMany(mappedBy = "sessao", fetch = FetchType.EAGER)
+    private Collection<VotoEntity> votos = new LinkedHashSet<VotoEntity>();
 
 }
