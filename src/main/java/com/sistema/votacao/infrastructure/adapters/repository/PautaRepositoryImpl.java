@@ -5,7 +5,8 @@ import com.sistema.votacao.domain.port.pauta.PautaRepositoryPort;
 import com.sistema.votacao.infrastructure.adapters.entity.PautaEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-@Primary
 public class PautaRepositoryImpl implements PautaRepositoryPort {
 
     private final SpringPautaRepository pautaRepository;
@@ -28,6 +28,7 @@ public class PautaRepositoryImpl implements PautaRepositoryPort {
     }
 
     @Transactional()
+    @CacheEvict(value = "pautas", allEntries = true)
     @Override
     public Pauta save(Pauta pauta) {
         PautaEntity pautaEntity = modelMapper.map(pauta, PautaEntity.class);
@@ -35,6 +36,7 @@ public class PautaRepositoryImpl implements PautaRepositoryPort {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "pautas")
     @Override
     public List<Pauta> findAll() {
         return pautaRepository.findAll().stream().map(pautaEntity -> {
@@ -42,10 +44,9 @@ public class PautaRepositoryImpl implements PautaRepositoryPort {
         }).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Pauta> findById(Long id) {
-//        PautaEntity pautaEntity = pautaRepository.findById(id).get();
-//        return Optional.of(modelMapper.map(pautaEntity, Pauta.class));
 
         Optional<PautaEntity> pautaEntity = pautaRepository.findById(id);
         if (pautaEntity.isPresent()) {

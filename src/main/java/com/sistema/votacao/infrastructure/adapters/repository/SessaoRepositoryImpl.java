@@ -29,6 +29,7 @@ public class SessaoRepositoryImpl implements SessaoRepositoryPort {
         sessaoRepository.save(sessaoEntity);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Sessao> findByPautaId(Pauta pauta) {
 

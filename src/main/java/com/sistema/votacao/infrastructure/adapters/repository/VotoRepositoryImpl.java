@@ -32,6 +32,7 @@ public class VotoRepositoryImpl implements VotoRepositoryPort {
 
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Boolean verificarVotoExistente(Voto voto, Sessao sessao) {
         return votoRepository.verifyVotoBySessao(voto.getCpf(), sessao.getId()).isPresent() ? Boolean.TRUE : Boolean.FALSE;
