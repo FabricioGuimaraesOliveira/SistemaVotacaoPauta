@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Data
 @EqualsAndHashCode
@@ -14,6 +15,7 @@ public class VotoRequestDTO {
 
     @ApiModelProperty(value = "CPF do Associado", example = "12345678")
     @NotNull(message = "CPF do Associado")
+    @CPF
     private String cpf;
 
     @ApiModelProperty(value = "Mensagem de escolha do Associado", example = "SIM")
