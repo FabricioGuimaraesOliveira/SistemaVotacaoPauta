@@ -48,6 +48,7 @@ public class PautaController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Obtendo o resultado da votação", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<PautaResponseDTO>> getResultado() {
+        log.info("Buscando Resultado!.");
         var result = pautaServicePort.findAll().stream().map(this::responseDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(result);
