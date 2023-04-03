@@ -1,7 +1,7 @@
 package com.sistema.votacao.application.adapters.dto.request;
 
 import com.sistema.votacao.domain.entities.VotoEscolhaUsuario;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,12 +13,12 @@ import org.hibernate.validator.constraints.br.CPF;
 @ToString
 public class VotoRequestDTO {
 
-    @ApiModelProperty(value = "CPF do Associado", example = "12345678")
-    @NotNull(message = "CPF do Associado")
+    @Schema(description = "CPF do Associado", example = "345.117.800-13")
+    @NotNull(message = "CPF do Associado não pode ser nullo")
     @CPF
     private String cpf;
 
-    @ApiModelProperty(value = "Mensagem de escolha do Associado", example = "SIM")
+
     @NotNull(message = "A escolha é obrigatório e precisa seguir o padrão: SIM/NAO")
     private VotoEscolhaUsuario votoEscolhaUsuario;
 }

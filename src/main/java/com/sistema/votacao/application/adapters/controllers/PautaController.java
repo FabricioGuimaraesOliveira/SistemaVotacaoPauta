@@ -4,10 +4,11 @@ import com.sistema.votacao.application.adapters.dto.request.PautaRequestDTO;
 import com.sistema.votacao.application.adapters.dto.response.PautaResponseDTO;
 import com.sistema.votacao.domain.entities.Pauta;
 import com.sistema.votacao.domain.port.pauta.PautaServicePort;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +23,29 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@Api(tags = {"PAUTA"})
 @RequestMapping("/v1/pauta")
 @RequiredArgsConstructor
+@Tag(name = "Pauta", description = "Endpoints para controle da Pauta")
 public class PautaController {
 
     private final ModelMapper modelMapper;
     private final PautaServicePort pautaServicePort;
 
-
+    @Operation(summary = "Criar uma Pauta",
+            description = "Neste endpoint será criado uma Pauta para votação.",
+            responses = {
+                    @ApiResponse(
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PautaResponseDTO.class)),
+                            responseCode = "201", description = "Pauta Criada com Sucesso."),
+                    @ApiResponse(
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = Error.class)),
+                            responseCode = "400", description = "Erro ao criar a Pauta"
+                    )
+            }
+    )
     @PostMapping(path = "/criar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Criação de Pauta", notes = "Criação de Pauta")
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "created", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<PautaResponseDTO> criarPauta(@RequestBody @Valid PautaRequestDTO pautaDto) {
         log.info("Iniciando a criacao da pauta : {} ", pautaDto.toString());
@@ -43,9 +55,18 @@ public class PautaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(response, PautaResponseDTO.class));
     }
 
+    @Operation(summary = "Obter resultado de todas as Pautas",
+            description = "Neste endpoint será retornado o resultado das votações.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200", description = "Resultado obtido com sucesso."),
+                    @ApiResponse(
+                            responseCode = "400", description = "Erro o obter resultado."
+                    )
+            }
+    )
+
     @GetMapping(path = "/resultado", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Obtendo o resultado da votação", notes = "Obtendo o resultado da votação")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Obtendo o resultado da votação", response = PautaResponseDTO.class)})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<PautaResponseDTO>> getResultado() {
         log.info("Buscando Resultado!.");
