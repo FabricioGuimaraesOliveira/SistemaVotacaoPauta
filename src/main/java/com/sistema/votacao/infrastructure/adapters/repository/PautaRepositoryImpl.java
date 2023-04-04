@@ -1,6 +1,7 @@
 package com.sistema.votacao.infrastructure.adapters.repository;
 
 import com.sistema.votacao.domain.entities.Pauta;
+import com.sistema.votacao.domain.entities.PautaResultDomain;
 import com.sistema.votacao.domain.port.pauta.PautaRepositoryPort;
 import com.sistema.votacao.infrastructure.adapters.entity.PautaEntity;
 import org.modelmapper.ModelMapper;
@@ -31,6 +32,7 @@ public class PautaRepositoryImpl implements PautaRepositoryPort {
     @CacheEvict(value = "pautas", allEntries = true)
     @Override
     public Pauta save(Pauta pauta) {
+
         PautaEntity pautaEntity = modelMapper.map(pauta, PautaEntity.class);
         return modelMapper.map(pautaRepository.saveAndFlush(pautaEntity), Pauta.class);
     }
@@ -53,5 +55,13 @@ public class PautaRepositoryImpl implements PautaRepositoryPort {
             return Optional.of(modelMapper.map(pautaEntity.get(), Pauta.class));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<PautaResultDomain> buscarResultadoVotacoes() {
+        return pautaRepository.getAllResults().stream().map(item -> {
+            return new PautaResultDomain(item.getPauta_id(), item.getNome(), item.getQtd_sim(), item.getQtd_nao());
+        }).collect(Collectors.toList());
+
     }
 }

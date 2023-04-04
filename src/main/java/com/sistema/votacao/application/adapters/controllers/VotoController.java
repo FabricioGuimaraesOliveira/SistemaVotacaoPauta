@@ -1,7 +1,6 @@
 package com.sistema.votacao.application.adapters.controllers;
 
 import com.sistema.votacao.application.adapters.dto.request.VotoRequestDTO;
-import com.sistema.votacao.application.adapters.dto.response.PautaResponseDTO;
 import com.sistema.votacao.domain.entities.Voto;
 import com.sistema.votacao.domain.port.voto.VotoServicePort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -32,7 +30,7 @@ public class VotoController {
             description = "Neste endpoint será registrado o voto.",
             responses = {
                     @ApiResponse(
-                            content = @Content(mediaType = "application/json" ),
+                            content = @Content(mediaType = "application/json"),
                             responseCode = "200", description = "Voto registrado com sucesso."),
                     @ApiResponse(
                             content = @Content(mediaType = "application/json",
@@ -43,12 +41,12 @@ public class VotoController {
     )
     @PostMapping(path = "/{pautaId}/votar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> votar(@Schema(description = "Id da pauta") @PathVariable(value = "pautaId") Long pautaId,
-                                        @RequestBody @Valid VotoRequestDTO votoRequestDTO) {
+    public void votar(@Schema(description = "Id da pauta") @PathVariable(value = "pautaId") Long pautaId,
+                      @RequestBody @Valid VotoRequestDTO votoRequestDTO) {
         log.info("Registrando Voto : {} ", votoRequestDTO.toString());
         Voto voto = modelMapper.map(votoRequestDTO, Voto.class);
         votoServicePort.registrarVoto(pautaId, voto);
         log.info("Voto Registrado com sucesso!");
-        return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 }
