@@ -4,6 +4,7 @@ import com.sistema.votacao.application.adapters.dto.request.PautaRequestDTO;
 import com.sistema.votacao.application.adapters.dto.response.PautaResponseDTO;
 import com.sistema.votacao.domain.entities.Pauta;
 import com.sistema.votacao.domain.port.pauta.PautaServicePort;
+import com.sistema.votacao.infrastructure.adapters.service.TopicKafkaProducerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,6 +31,7 @@ public class PautaController {
 
     private final ModelMapper modelMapper;
     private final PautaServicePort pautaServicePort;
+    private final TopicKafkaProducerService topicKafkaProducer;
 
     @Operation(summary = "Criar uma Pauta",
             description = "Neste endpoint será criado uma Pauta para votação.",
@@ -75,9 +77,33 @@ public class PautaController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    @Operation(summary = "Notificar resultado da pauta",
+            description = "Notificar resultado da pauta via kafka.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200"),
+                    @ApiResponse(
+                            responseCode = "400"
+                    )
+            }
+    )
+
+    @GetMapping(path = "/{pautaId}/notificarResultado", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Object> enviarResultado(@Schema(description = "Id da pauta", example = "1") @PathVariable(value = "pautaId") Long pautaId) {
+        log.info("Notificar no topico kafka.");
+        var result = pautaServicePort.findById(pautaId);
+        result.ifPresent(
+                pauta -> topicKafkaProducer.sendTopicKafka(responseDTO(pauta))
+        );
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     private PautaResponseDTO responseDTO(Pauta pauta) {
         PautaResponseDTO pautaResponseDTO = modelMapper.map(pauta, PautaResponseDTO.class);
         pautaResponseDTO.setResultado(pautaServicePort.resultado(pauta));
         return pautaResponseDTO;
     }
+
+
 }

@@ -33,9 +33,7 @@ Geralmente aplicações que possuem muitos sistemas consumidores são de difíci
 ## Testes de integração
 Foram realizados testes na camada web(controlles), no futuro será implementado a cobertura total do codigo a utilizando o JACOCO.
 
-## Performance 
-Na busca pela melhora de desempenho da API desenvolvida foi utilizado o cache em memória para possibilitar o aumento da velocidade de consumo a dados frequentemente acessados, a fim de evitar consultas regulares no banco de dados.
-- No futuro, será implementado o teste de performance utilizando a ferramenta de teste de carga de  codigo aberto K6.
+
 ## Versionamento da Api
 
 Foi utilizado o versionamento da api por URL, ex : /v1/pauta/criar
@@ -51,5 +49,15 @@ Isso pode soar como uma solução fácil; porém, foi considerado que outros des
 
 Foi implementado um RestTemplate para validar o cpf do associado , contudo a url=https://user-info.herokuapp.com/users/{cpf} nao está mais disponível. 
 
-## Integração Kafka (Em desenvolvimento)
+## Integração Kafka
 Foi implementado um Kafka Producer Template para simular o envio do resultado para um topico, com a  contagem dos votos da pauta. Esses dados podem ser utilizados por um sistema de notificação por exemplo.
+
+Para rodar o kafka local por favor utile o comando 
+- docker-compose -f kafka-docker-compose.yml up -d dentro da pasta /docker
+
+Para produzir a mensagem use o recurso /v1/pauta/{pautaId}/notificarResultado
+
+
+## Performance(Ainda em Desenvolvimento)
+Na busca pela melhora de desempenho da API desenvolvida foi utilizado o cache em memória para possibilitar o aumento da velocidade de consumo a dados frequentemente acessados, a fim de evitar consultas regulares no banco de dados.
+- No futuro, será implementado o teste de performance utilizando a ferramenta de teste de carga de  codigo aberto K6.

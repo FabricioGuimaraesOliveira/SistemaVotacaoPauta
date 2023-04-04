@@ -1,14 +1,12 @@
 package com.sistema.votacao;
 
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import lombok.Generated;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.kafka.annotation.EnableKafka;
 
+@EnableKafka
 @SpringBootApplication(scanBasePackages = {"com.sistema.votacao"})
-
 public class VotacaoApplication {
 
     public static void main(String[] args) {
