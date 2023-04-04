@@ -25,12 +25,18 @@ Para construção do sistema foram utilizadas as tecnologias:
 
 ![img_1.png](img_1.png)
 
-Neste projeto foi aplicado o conceito de arquitetura hexagonal devido os diversos benefícios que podemos obter
-em aplicações grandes com a divisão em camadas, em aplicações muito complexas com o encapsulamento da lógica, em aplicações com muita integração com a utilização de interfaces e serviços, tudo isso garante um aumento considerável na facilidade de manutenção e escalabilidade.
-Geralmente aplicações que possuem muitos sistemas consumidores são de difícil manutenção, quando necessário, o impacto externo também acaba sendo grande se os serviços não forem desacoplados da lógica.
+Uma Arquitetura Hexagonal divide as classes de um sistema em dois grupos principais:
+- Classes de domínio, isto é, diretamente relacionadas com o negócio do sistema.
+- Classes relacionadas com infraestrutura, tecnologias e responsáveis pela integração com sistemas externos (tais como bancos de dados).
 
+Neste projeto foi aplicado o conceito de arquitetura hexagonal devido os diversos benefícios que podemos obter como:
+- Testabilidade : Desacoplar as regras de negócios de preocupações externas, como banco de dados, estrutura, interface do usuário e outras dependências, permite testar as regras de negócios de forma independente.
+- Flexibilidade : É possível alterar as implementações concretas sem precisar modificar as regras de negócios.
+- Foco no modelo do negócio : A principal objetivo foi separar a tecnologia utilizada do modelo de negócio.
+- Fácil manutenção e escalabilidade
+- Favorece a reusabilidade de código, alta coesão, baixo acoplamento, independência de tecnologia
 
-## Testes de integração
+## Testes Unitários
 Foram realizados testes na camada web(controlles), no futuro será implementado a cobertura total do codigo a utilizando o JACOCO.
 
 
@@ -45,9 +51,11 @@ Os metodo de versionamento por cabeçalhos personalizados seria uma boa opção 
 
 Isso pode soar como uma solução fácil; porém, foi considerado que outros desenvolvedores podem extrair os dados por meio da  API de código aberto, sem fornecer cabeçalhos personalizados.
 
-## Consultas Externas(Em desenvolvimento)
+## Consultas Externas
 
-Foi implementado um RestTemplate para validar o cpf do associado , contudo a url=https://user-info.herokuapp.com/users/{cpf} nao está mais disponível. 
+Foi implementado um RestTemplateService para validar o cpf do associado , contudo a url externa url=https://user-info.herokuapp.com/users/{cpf} nao está mais disponível. 
+Logo, essa consulta nao esta sendo realizada no projeto.
+
 
 ## Integração Kafka
 Foi implementado um Kafka Producer Template para simular o envio do resultado para um topico, com a  contagem dos votos da pauta. Esses dados podem ser utilizados por um sistema de notificação por exemplo.
