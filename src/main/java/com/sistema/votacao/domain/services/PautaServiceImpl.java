@@ -1,6 +1,7 @@
 package com.sistema.votacao.domain.services;
 
 import com.sistema.votacao.domain.entities.Pauta;
+import com.sistema.votacao.domain.entities.PautaResultDomain;
 import com.sistema.votacao.domain.entities.Sessao;
 import com.sistema.votacao.domain.entities.Voto;
 import com.sistema.votacao.domain.port.pauta.PautaRepositoryPort;
@@ -48,6 +49,11 @@ public class PautaServiceImpl implements PautaServicePort {
         result.put("NAO", votos.stream().filter(v -> v.getVotoEscolhaUsuario().toString().equalsIgnoreCase("NAO")).count());
 
         return result;
+    }
+
+    @Override
+    public List<PautaResultDomain> buscarResultadoVotacoes() {
+        return pautaRepositoryPort.buscarResultadoVotacoes();
     }
 
 }

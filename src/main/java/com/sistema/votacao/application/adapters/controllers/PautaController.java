@@ -2,6 +2,7 @@ package com.sistema.votacao.application.adapters.controllers;
 
 import com.sistema.votacao.application.adapters.dto.request.PautaRequestDTO;
 import com.sistema.votacao.application.adapters.dto.response.PautaResponseDTO;
+import com.sistema.votacao.application.adapters.dto.response.PautaResultResponseDTO;
 import com.sistema.votacao.domain.entities.Pauta;
 import com.sistema.votacao.domain.port.pauta.PautaServicePort;
 import com.sistema.votacao.infrastructure.adapters.service.TopicKafkaProducerService;
@@ -70,10 +71,9 @@ public class PautaController {
 
     @GetMapping(path = "/resultado", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<PautaResponseDTO>> getResultado() {
+    public ResponseEntity<List<PautaResultResponseDTO>> getResultado() {
         log.info("Buscando Resultado!.");
-        var result = pautaServicePort.findAll().stream().map(this::responseDTO)
-                .collect(Collectors.toList());
+        var result = pautaServicePort.buscarResultadoVotacoes().stream().map(item -> modelMapper.map(item, PautaResultResponseDTO.class)).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
@@ -87,16 +87,14 @@ public class PautaController {
                     )
             }
     )
-
     @GetMapping(path = "/{pautaId}/notificarResultado", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> enviarResultado(@Schema(description = "Id da pauta", example = "1") @PathVariable(value = "pautaId") Long pautaId) {
+    public void enviarResultado(@Schema(description = "Id da pauta", example = "1") @PathVariable(value = "pautaId") Long pautaId) {
         log.info("Notificar no topico kafka.");
         var result = pautaServicePort.findById(pautaId);
         result.ifPresent(
                 pauta -> topicKafkaProducer.sendTopicKafka(responseDTO(pauta))
         );
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     private PautaResponseDTO responseDTO(Pauta pauta) {

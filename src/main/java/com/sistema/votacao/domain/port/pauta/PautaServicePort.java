@@ -1,6 +1,7 @@
 package com.sistema.votacao.domain.port.pauta;
 
 import com.sistema.votacao.domain.entities.Pauta;
+import com.sistema.votacao.domain.entities.PautaResultDomain;
 
 import java.util.List;
 import java.util.Map;
@@ -12,5 +13,8 @@ public interface PautaServicePort {
     List<Pauta> findAll();
 
     Optional<Pauta> findById(Long id);
+
     Map<String, Long> resultado(Pauta pauta);
+
+    List<PautaResultDomain> buscarResultadoVotacoes();
 }
