@@ -52,12 +52,12 @@ Foi implementado um RestTemplate para validar o cpf do associado , contudo a url
 ## Integração Kafka
 Foi implementado um Kafka Producer Template para simular o envio do resultado para um topico, com a  contagem dos votos da pauta. Esses dados podem ser utilizados por um sistema de notificação por exemplo.
 
-Para rodar o kafka local por favor utile o comando 
+Para rodar o kafka local por favor utilize o comando 
 - docker-compose -f kafka-docker-compose.yml up -d dentro da pasta /docker
 
 Para produzir a mensagem use o recurso /v1/pauta/{pautaId}/notificarResultado
 
 
-## Performance(Ainda em Desenvolvimento)
+## Performance(Em Desenvolvimento)
 Na busca pela melhora de desempenho da API desenvolvida foi utilizado o cache em memória para possibilitar o aumento da velocidade de consumo a dados frequentemente acessados, a fim de evitar consultas regulares no banco de dados.
 - No futuro, será implementado o teste de performance utilizando a ferramenta de teste de carga de  codigo aberto K6.

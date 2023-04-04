@@ -30,6 +30,7 @@ public class CallValidateCpfService {
 
         try {
             var respone = restTemplate.exchange(urlConsult, HttpMethod.GET, getEntity(), String.class);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

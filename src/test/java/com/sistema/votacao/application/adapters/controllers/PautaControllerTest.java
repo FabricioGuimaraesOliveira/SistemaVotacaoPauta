@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sistema.votacao.application.adapters.dto.request.PautaRequestDTO;
 import com.sistema.votacao.domain.entities.Pauta;
 import com.sistema.votacao.domain.port.pauta.PautaServicePort;
+import com.sistema.votacao.infrastructure.adapters.service.TopicKafkaProducerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -29,6 +30,8 @@ public class PautaControllerTest {
 
     @MockBean
     private PautaServicePort pautaServicePort;
+    @MockBean
+    private TopicKafkaProducerService topicKafkaProducer;
     @MockBean
     private ModelMapper modelMapper;
 
